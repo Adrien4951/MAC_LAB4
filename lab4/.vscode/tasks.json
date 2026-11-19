@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build lab4",
+            "type": "cmake",
+            "command": "build",
+            "group": { "kind": "build", "isDefault": true },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Flash lab4 (ST-Link)",
+            "type": "shell",
+            "command": "C:/ST/STM32CubeCLT_1.22.0/STM32CubeProgrammer/bin/STM32_Programmer_CLI.exe",
+            "args": ["-c", "port=SWD", "-w", "${workspaceFolder}/build/lab4.bin", "0x08000000", "-v", "-rst"],
+            "dependsOn": "Build lab4 bin",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build lab4 bin",
+            "type": "cmake",
+            "command": "build",
+            "targets": ["bin"],
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}
