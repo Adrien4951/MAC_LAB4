@@ -1,0 +1,10 @@
+# Build CMake / fichiers compiles
+build/
+*.o
+*.elf
+*.bin
+*.hex
+*.map
+.DS_Store
+Thumbs.db
+desktop.ini
