@@ -48,6 +48,34 @@ void setupTimer(){
     TIM2->CR1 |= TIM_CR1_ARPE;   // ARR mis à jour seulement au débordement
     
 }
+/* Question 9 : un tour complet de l'axe de sortie.
+ * 64 pas par tour du rotor x reduction 64 = 64*64 = 4096 pas.
+ * sens = true  : on parcourt seq dans un sens (i++)
+ * sens = false : dans l'autre (i--)
+ * Chaque pas est cadence par le debordement de TIM2 (le timer doit tourner). */
+void tourne(bool sens)
+{
+    static int i = 0;
+    for (int n = 0; n < 64 * 64; n++)
+    {
+        while (!(TIM2->SR & TIM_SR_UIF)); // attend le debordement du timer
+        TIM2->SR &= ~TIM_SR_UIF;          // clear update event flag
+        stepCW(i);
+        if (sens) {
+            i++;
+        }
+        else {
+            i--;
+        }
+        if (i < 0) {
+            i = 7;
+        }
+        if (i > 7) {
+            i = 0;
+        }
+    }
+}
+
 /* main function */
 int main(void)
 {
